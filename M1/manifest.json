@@ -1,6 +1,7 @@
 {
   "pairs": [
-    {"id":"B","img1":"B1.jpg","img2":"B2.jpg"}
+    {"id":"A","img1":"A1.jpg","img2":"A2.jpg"}
+    ,{"id":"B","img1":"B1.jpg","img2":"B2.jpg"}
     ,{"id":"C","img1":"C1.jpg","img2":"C2.jpg"}
     ,{"id":"F","img1":"F1.jpg","img2":"F2.jpg"}
     ,{"id":"J","img1":"J1.jpg","img2":"J2.jpg"}
@@ -14,6 +15,5 @@
     ,{"id":"T","img1":"T1.jpg","img2":"T2.jpg"}
     ,{"id":"U","img1":"U1.jpg","img2":"U2.jpg"}
     ,{"id":"V","img1":"V1.jpg","img2":"V2.jpg"}
-    ,{"id":"Z","img1":"Z1.jpg","img2":"Z2.jpg"}
   ]
 }
