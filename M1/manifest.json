@@ -17,8 +17,11 @@
     ,{"id":"V","img1":"V1.jpg","img2":"V2.jpg"}
   ],
   "characters": {
-    "a": ["sats-a1.png"]
-    , "h": ["sats-h1.png", "sats-h2.png", "sats-h3.png"]
-    , "k": ["sats-k1.png", "sats-k2.png"]
+    "khalid": [""khalid-confused.png"", ""khalid-think.png"", ""khalid-win.png""]
+    , "sats": [""sats-a1.png"", ""sats-confused.png"", ""sats-think.png"", ""sats-win.png""]
+    , "ali": [""ali-confused.png"", ""ali-lose.png"", ""ali-think.png"", ""ali-win.png""]
+    , "saleh": [""saleh-confused.png"", ""saleh-think.png"", ""saleh-win.png""]
+    , "omar": [""omar-confused.png"", ""omar-think.png"", ""omar-win.png""]
+    , "haitham": [""haitham-lose.png"", ""haitham-think.png"", ""haitham-win.png""]
   }
 }

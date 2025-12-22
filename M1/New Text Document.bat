@@ -35,16 +35,17 @@ for %%L in (A B C D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
 REM ---- CHARACTERS ----
 set "firstChar=1"
 
-for %%L in (a b c d e f g h i j k l m n o p q r s t u v w x y z) do (
+REM ✅ أسماء الشخصيات (اكتبها lowercase)
+for %%N in (khalid sats ali saleh omar wissam haitham) do (
   set "list="
 
   for %%E in (png jpg jpeg webp) do (
-    for %%F in (sats-%%L*.%%E) do (
-      if exist "%%F" (
+    for %%F in ("%%N-*.%%E") do (
+      if exist "%%~fF" (
         if defined list (
-          set "list=!list!, "%%F""
+          set "list=!list!, ""%%~nxF"""
         ) else (
-          set "list="%%F""
+          set "list=""%%~nxF"""
         )
       )
     )
@@ -53,9 +54,9 @@ for %%L in (a b c d e f g h i j k l m n o p q r s t u v w x y z) do (
   if defined list (
     if "!firstChar!"=="1" (
       set "firstChar=0"
-      >>"%OUT%" echo     "%%L": [!list!]
+      >>"%OUT%" echo     "%%N": [!list!]
     ) else (
-      >>"%OUT%" echo     , "%%L": [!list!]
+      >>"%OUT%" echo     , "%%N": [!list!]
     )
   )
 )
