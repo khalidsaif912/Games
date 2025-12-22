@@ -2,12 +2,14 @@
 setlocal EnableExtensions EnableDelayedExpansion
 
 set "OUT=manifest.json"
+set "Q=""
 
-REM ================== START ==================
-> "%OUT%" echo {
+> "%OUT%" echo(
+>>"%OUT%" echo {
+
+REM ================== PAIRS ==================
 >>"%OUT%" echo   "pairs": [
 
-REM ---- PAIRS ----
 set "firstPair=1"
 for %%L in (A B C D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
   set "img1="
@@ -31,42 +33,41 @@ for %%L in (A B C D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
 >>"%OUT%" echo   ],
 >>"%OUT%" echo   "characters": {
 
-REM ---- CHARACTERS ----
+REM ================== CHARACTERS ==================
 set "firstChar=1"
 
-REM ✅ أسماء الشخصيات (لازم lowercase)
 for %%N in (khalid sats ali saleh omar wissam haitham) do (
-  set "firstItem=1"
-
-  REM افتح مصفوفة الشخصية (مع الفاصلة بين الشخصيات)
   if "!firstChar!"=="1" (
     set "firstChar=0"
-    >>"%OUT%" <nul set /p ="    ""%%N"": ["
   ) else (
-    >>"%OUT%" <nul set /p =",    ""%%N"": ["
+    >>"%OUT%" echo     ,
   )
 
-  REM أضف ملفات الصور (%%N-*.ext)
+  REM "name": [
+  >>"%OUT%" <nul set /p ="    !Q!%%N!Q!: ["
+
+  set "firstItem=1"
+
   for %%E in (png jpg jpeg webp) do (
     for %%F in ("%%N-*.%%E") do (
       if exist "%%~fF" (
         if "!firstItem!"=="1" (
           set "firstItem=0"
-          >>"%OUT%" <nul set /p ="""%%~nxF"""
+          >>"%OUT%" <nul set /p ="!Q!%%~nxF!Q!"
         ) else (
-          >>"%OUT%" <nul set /p =", ""%%~nxF"""
+          >>"%OUT%" <nul set /p =", !Q!%%~nxF!Q!"
         )
       )
     )
   )
 
-  REM اغلق المصفوفة
   >>"%OUT%" echo ]
 )
 
+>>"%OUT%" echo(
 >>"%OUT%" echo   }
 >>"%OUT%" echo }
 
-echo.
-echo ✅ manifest.json updated successfully
+echo(
+echo ✅ manifest.json updated successfully (Valid JSON)
 pause

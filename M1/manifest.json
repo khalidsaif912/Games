@@ -1,3 +1,4 @@
+
 {
   "pairs": [
     {"id":"A","img1":"A1.jpg","img2":"A2.jpg"}
@@ -16,13 +17,20 @@
     ,{"id":"U","img1":"U1.jpg","img2":"U2.jpg"}
     ,{"id":"V","img1":"V1.jpg","img2":"V2.jpg"}
   ],
-"characters": {
-  "khalid": ["khalid-confused.png", "khalid-think.png", "khalid-win.png"],
-  "sats": ["sats-a1.png", "sats-confused.png", "sats-think.png", "sats-win.png"],
-  "ali": ["ali-confused.png", "ali-lose.png", "ali-think.png", "ali-win.png"],
-  "saleh": ["saleh-confused.png", "saleh-think.png", "saleh-win.png"],
-  "omar": ["omar-confused.png", "omar-think.png", "omar-win.png"],
-  "wissam": [],
-  "haitham": ["haitham-lose.png", "haitham-think.png", "haitham-win.png"]
-}
+  "characters": {
+"khalid": ["khalid-confused.png", "khalid-think.png", "khalid-win.png"]
+    ,
+"sats": ["sats-a1.png", "sats-confused.png", "sats-think.png", "sats-win.png"]
+    ,
+"ali": ["ali-confused.png", "ali-lose.png", "ali-think.png", "ali-win.png"]
+    ,
+"saleh": ["saleh-confused.png", "saleh-think.png", "saleh-win.png"]
+    ,
+"omar": ["omar-confused.png", "omar-think.png", "omar-win.png"]
+    ,
+"wissam": []
+    ,
+"haitham": ["haitham-lose.png", "haitham-think.png", "haitham-win.png"]
+
+  }
 }
