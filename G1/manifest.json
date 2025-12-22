@@ -1,36 +1,20 @@
 {
   "images": [
     { "img": "1.jpg", "label": "1" }
-,
-    { "img": "10.jpg", "label": "10" }
-,
-    { "img": "11.jpg", "label": "11" }
-,
-    { "img": "12.jpg", "label": "12" }
-,
-    { "img": "13.jpg", "label": "13" }
-,
-    { "img": "14.jpg", "label": "14" }
-,
-    { "img": "15.jpg", "label": "15" }
-,
-    { "img": "16.jpg", "label": "16" }
-,
-    { "img": "2.jpg", "label": "2" }
-,
-    { "img": "3.jpg", "label": "3" }
-,
-    { "img": "4.jpg", "label": "4" }
-,
-    { "img": "5.jpg", "label": "5" }
-,
-    { "img": "6.jpg", "label": "6" }
-,
-    { "img": "7.jpg", "label": "7" }
-,
-    { "img": "8.jpg", "label": "8" }
-,
-    { "img": "9.jpg", "label": "9" }
-
+    ,{ "img": "10.jpg", "label": "10" }
+    ,{ "img": "11.jpg", "label": "11" }
+    ,{ "img": "12.jpg", "label": "12" }
+    ,{ "img": "13.jpg", "label": "13" }
+    ,{ "img": "14.jpg", "label": "14" }
+    ,{ "img": "15.jpg", "label": "15" }
+    ,{ "img": "16.jpg", "label": "16" }
+    ,{ "img": "2.jpg", "label": "2" }
+    ,{ "img": "3.jpg", "label": "3" }
+    ,{ "img": "4.jpg", "label": "4" }
+    ,{ "img": "5.jpg", "label": "5" }
+    ,{ "img": "6.jpg", "label": "6" }
+    ,{ "img": "7.jpg", "label": "7" }
+    ,{ "img": "8.jpg", "label": "8" }
+    ,{ "img": "9.jpg", "label": "9" }
   ]
 }
