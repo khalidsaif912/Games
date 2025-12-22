@@ -15,5 +15,10 @@
     ,{"id":"T","img1":"T1.jpg","img2":"T2.jpg"}
     ,{"id":"U","img1":"U1.jpg","img2":"U2.jpg"}
     ,{"id":"V","img1":"V1.jpg","img2":"V2.jpg"}
-  ]
+  ],
+  "characters": {
+    "a": ["sats-a1.png"]
+    , "h": ["sats-h1.png", "sats-h2.png", "sats-h3.png"]
+    , "k": ["sats-k1.png", "sats-k2.png"]
+  }
 }
