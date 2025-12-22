@@ -3,13 +3,11 @@ setlocal EnableExtensions EnableDelayedExpansion
 
 set "OUT=manifest.json"
 
-REM ========== START ==========
 > "%OUT%" echo {
 >>"%OUT%" echo   "pairs": [
 
-set "firstPair=1"
-
 REM ---- PAIRS ----
+set "firstPair=1"
 for %%L in (A B C D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
   set "img1="
   set "img2="
@@ -35,30 +33,37 @@ for %%L in (A B C D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
 REM ---- CHARACTERS ----
 set "firstChar=1"
 
-REM ✅ أسماء الشخصيات (اكتبها lowercase)
+REM ✅ أسماء الشخصيات (لازم lowercase)
 for %%N in (khalid sats ali saleh omar wissam haitham) do (
-  set "list="
+  REM سنكتب: "name": [ ... ]
+  set "wroteAny=0"
+  set "firstItem=1"
 
+  REM ابدأ سطر الشخصية
+  if "!firstChar!"=="1" (
+    set "firstChar=0"
+    >>"%OUT%" <nul set /p ="    ""%%N"": ["
+  ) else (
+    >>"%OUT%" <nul set /p =",    ""%%N"": ["
+  )
+
+  REM اجمع الملفات من كل الامتدادات
   for %%E in (png jpg jpeg webp) do (
     for %%F in ("%%N-*.%%E") do (
       if exist "%%~fF" (
-        if defined list (
-          set "list=!list!, ""%%~nxF"""
+        set "wroteAny=1"
+        if "!firstItem!"=="1" (
+          set "firstItem=0"
+          >>"%OUT%" <nul set /p ="""%%~nxF"""
         ) else (
-          set "list=""%%~nxF"""
+          >>"%OUT%" <nul set /p =", ""%%~nxF"""
         )
       )
     )
   )
 
-  if defined list (
-    if "!firstChar!"=="1" (
-      set "firstChar=0"
-      >>"%OUT%" echo     "%%N": [!list!]
-    ) else (
-      >>"%OUT%" echo     , "%%N": [!list!]
-    )
-  )
+  REM اغلق مصفوفة الشخصية
+  >>"%OUT%" echo ]
 )
 
 >>"%OUT%" echo   }
