@@ -8,6 +8,8 @@
     ,{ "img": "14.jpg", "label": "14" }
     ,{ "img": "15.jpg", "label": "15" }
     ,{ "img": "16.jpg", "label": "16" }
+    ,{ "img": "17.jpg", "label": "17" }
+    ,{ "img": "19.png", "label": "19" }
     ,{ "img": "2.jpg", "label": "2" }
     ,{ "img": "3.jpg", "label": "3" }
     ,{ "img": "4.jpg", "label": "4" }
@@ -16,11 +18,14 @@
     ,{ "img": "7.jpg", "label": "7" }
     ,{ "img": "8.jpg", "label": "8" }
     ,{ "img": "9.jpg", "label": "9" }
+    ,{ "img": "w.png", "label": "w" }
   ],
   "characters": {
 "alii": ["characters/alii-lose.png", "characters/alii-think.png", "characters/alii-win.png"]
 ,
 "fahim": ["characters/fahim-confused.png", "characters/fahim-think.png", "characters/fahim-win.png"]
+,
+"golam": ["characters/golam-confused.png", "characters/golam-think.png", "characters/golam-win.png"]
 ,
 "hosni": ["characters/hosni-confused.png", "characters/hosni-think.png", "characters/hosni-win.png"]
 ,

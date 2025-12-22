@@ -1,54 +1,65 @@
 @echo off
+chcp 65001 > nul
 setlocal EnableExtensions EnableDelayedExpansion
 cd /d "%~dp0"
 
 set "OUT=manifest.json"
 set "CHAR_DIR=characters"
-set "Q=""
+set "LIST=%TEMP%\G1_num_list_%RANDOM%.txt"
+set "KEYS=%TEMP%\G1_char_keys_%RANDOM%.txt"
 
-set "KEYS=%TEMP%\m1_char_keys_%RANDOM%.txt"
+if exist "%LIST%" del /q "%LIST%" >nul 2>&1
 if exist "%KEYS%" del /q "%KEYS%" >nul 2>&1
 
-> "%OUT%" echo(
->>"%OUT%" echo {
-
-REM ===== PAIRS (M1 root) =====
->>"%OUT%" echo   "pairs": [
-set "firstPair=1"
-
-for %%L in (A B C D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
-  set "img1="
-  set "img2="
-
-  for %%E in (png jpg jpeg webp) do (
-    if not defined img1 if exist "%%L1.%%E" set "img1=%%L1.%%E"
-    if not defined img2 if exist "%%L2.%%E" set "img2=%%L2.%%E"
+REM =========================
+REM 1) IMAGES (numeric only)
+REM =========================
+for %%E in (png jpg jpeg webp) do (
+  for %%F in (*."%%E") do (
+    echo %%~nF| findstr /R "^[0-9][0-9]*$" >nul
+    if not errorlevel 1 echo %%~nF.%%E>>"%LIST%"
   )
+)
 
-  if defined img1 if defined img2 (
-    if "!firstPair!"=="1" (
-      set "firstPair=0"
-      >>"%OUT%" echo     {"id":"%%L","img1":"!img1!","img2":"!img2!"}
-    ) else (
-      >>"%OUT%" echo     ,{"id":"%%L","img1":"!img1!","img2":"!img2!"}
-    )
+if not exist "%LIST%" (
+  echo ⚠️ لم يتم العثور على صور رقمية مثل 1.jpg داخل %CD%
+  pause
+  exit /b 0
+)
+
+sort /L C "%LIST%" /O "%LIST%"
+
+> "%OUT%" echo {
+>>"%OUT%" echo   "images": [
+
+set "first=1"
+for /f "usebackq delims=" %%S in ("%LIST%") do (
+  for %%A in ("%%S") do set "NAME=%%~nA"
+  if "!first!"=="1" (
+    set "first=0"
+    >>"%OUT%" echo     { "img": "%%S", "label": "!NAME!" }
+  ) else (
+    >>"%OUT%" echo     ,{ "img": "%%S", "label": "!NAME!" }
   )
 )
 
 >>"%OUT%" echo   ],
 >>"%OUT%" echo   "characters": {
 
-REM ===== DISCOVER KEYS ONLY FROM characters\ =====
+REM =========================
+REM 2) CHARACTERS (from characters\)
+REM =========================
 if not exist "%CHAR_DIR%\" (
   >>"%OUT%" echo   }
   >>"%OUT%" echo }
-  echo(
-  echo ⚠️ Folder not found: %CD%\%CHAR_DIR%
-  echo ✅ manifest.json generated but characters is empty.
+  del /q "%LIST%" >nul 2>&1
+  echo ⚠️ لم يتم العثور على مجلد characters داخل %CD%
+  echo ✅ تم إنشاء manifest.json لكن بدون شخصيات.
   pause
   exit /b 0
 )
 
+REM Discover character keys from files like name-state.png
 for %%E in (png jpg jpeg webp) do (
   for %%F in ("%CHAR_DIR%\*-*.%%E") do (
     if exist "%%~fF" (
@@ -59,18 +70,12 @@ for %%E in (png jpg jpeg webp) do (
   )
 )
 
-REM ===== WRITE CHARACTERS (ONLY characters/...) =====
 set "firstChar=1"
-
 if exist "%KEYS%" (
   for /f "usebackq delims=" %%N in ("%KEYS%") do (
-    if "!firstChar!"=="1" (
-      set "firstChar=0"
-    ) else (
-      >>"%OUT%" echo ,
-    )
+    if "!firstChar!"=="1" (set "firstChar=0") else (>>"%OUT%" echo ,)
 
-    >>"%OUT%" <nul set /p ="    !Q!%%N!Q!: ["
+    >>"%OUT%" <nul set /p ="    "%%N": ["
     set "firstItem=1"
 
     for %%E in (png jpg jpeg webp) do (
@@ -78,9 +83,9 @@ if exist "%KEYS%" (
         if exist "%%~fF" (
           if "!firstItem!"=="1" (
             set "firstItem=0"
-            >>"%OUT%" <nul set /p ="!Q!%CHAR_DIR%/%%~nxF!Q!"
+            >>"%OUT%" <nul set /p =""%CHAR_DIR%/%%~nxF""
           ) else (
-            >>"%OUT%" <nul set /p =", !Q!%CHAR_DIR%/%%~nxF!Q!"
+            >>"%OUT%" <nul set /p =", "%CHAR_DIR%/%%~nxF""
           )
         )
       )
@@ -94,8 +99,8 @@ if exist "%KEYS%" (
 >>"%OUT%" echo   }
 >>"%OUT%" echo }
 
-if exist "%KEYS%" del /q "%KEYS%" >nul 2>&1
+del /q "%LIST%" >nul 2>&1
+del /q "%KEYS%" >nul 2>&1
 
-echo(
-echo ✅ manifest.json generated (characters ONLY from %CHAR_DIR%\)
+echo ✅ تم إنشاء manifest.json (images + characters) داخل G1 بنجاح
 pause

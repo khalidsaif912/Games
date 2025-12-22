@@ -5,30 +5,36 @@ cd /d "%~dp0"
 
 set "OUT=manifest.json"
 set "CHAR_DIR=characters"
-set "LIST=%TEMP%\G1_num_list_%RANDOM%.txt"
+set "LIST=%TEMP%\G1_img_list_%RANDOM%.txt"
 set "KEYS=%TEMP%\G1_char_keys_%RANDOM%.txt"
 
 if exist "%LIST%" del /q "%LIST%" >nul 2>&1
 if exist "%KEYS%" del /q "%KEYS%" >nul 2>&1
 
 REM =========================
-REM 1) IMAGES (numeric only)
+REM 1) Collect ALL images in root (any name)
 REM =========================
 for %%E in (png jpg jpeg webp) do (
-  for %%F in (*."%%E") do (
-    echo %%~nF| findstr /R "^[0-9][0-9]*$" >nul
-    if not errorlevel 1 echo %%~nF.%%E>>"%LIST%"
+  for /f "delims=" %%F in ('dir /b /a-d "*.%%E" 2^>nul') do (
+    REM Skip card-back (optional)
+    if /I not "%%F"=="card-back.%%E" (
+      echo %%F>>"%LIST%"
+    )
   )
 )
 
 if not exist "%LIST%" (
-  echo ⚠️ لم يتم العثور على صور رقمية مثل 1.jpg داخل %CD%
+  echo ⚠️ لم يتم العثور على صور في %CD%
+  echo    تأكد أن الصور موجودة داخل G1 وليس داخل مجلد آخر.
   pause
   exit /b 0
 )
 
 sort /L C "%LIST%" /O "%LIST%"
 
+REM =========================
+REM 2) Write images section
+REM =========================
 > "%OUT%" echo {
 >>"%OUT%" echo   "images": [
 
@@ -47,7 +53,7 @@ for /f "usebackq delims=" %%S in ("%LIST%") do (
 >>"%OUT%" echo   "characters": {
 
 REM =========================
-REM 2) CHARACTERS (from characters\)
+REM 3) Characters from characters\ (name-win.png OR name_win.png)
 REM =========================
 if not exist "%CHAR_DIR%\" (
   >>"%OUT%" echo   }
@@ -59,14 +65,18 @@ if not exist "%CHAR_DIR%\" (
   exit /b 0
 )
 
-REM Discover character keys from files like name-state.png
+REM Discover unique keys
 for %%E in (png jpg jpeg webp) do (
-  for %%F in ("%CHAR_DIR%\*-*.%%E") do (
-    if exist "%%~fF" (
-      for /f "delims=-" %%K in ("%%~nF") do (
-        findstr /I /X /C:"%%K" "%KEYS%" >nul 2>&1 || echo %%K>>"%KEYS%"
-      )
-    )
+  for /f "delims=" %%F in ('dir /b /a-d "%CHAR_DIR%\*.%%E" 2^>nul') do (
+    set "FN=%%~nF"
+    set "KEY=!FN!"
+
+    REM split by "-" if exists
+    for /f "tokens=1 delims=-" %%K in ("!KEY!") do set "KEY=%%K"
+    REM then split by "_" if exists
+    for /f "tokens=1 delims=_" %%K in ("!KEY!") do set "KEY=%%K"
+
+    findstr /I /X /C:"!KEY!" "%KEYS%" >nul 2>&1 || echo !KEY!>>"%KEYS%"
   )
 )
 
@@ -79,14 +89,20 @@ if exist "%KEYS%" (
     set "firstItem=1"
 
     for %%E in (png jpg jpeg webp) do (
-      for %%F in ("%CHAR_DIR%\%%N-*.%%E") do (
-        if exist "%%~fF" (
-          if "!firstItem!"=="1" (
-            set "firstItem=0"
-            >>"%OUT%" <nul set /p =""%CHAR_DIR%/%%~nxF""
-          ) else (
-            >>"%OUT%" <nul set /p =", "%CHAR_DIR%/%%~nxF""
-          )
+      for /f "delims=" %%F in ('dir /b /a-d "%CHAR_DIR%\%%N-*.%%E" 2^>nul') do (
+        if "!firstItem!"=="1" (
+          set "firstItem=0"
+          >>"%OUT%" <nul set /p =""%CHAR_DIR%/%%F""
+        ) else (
+          >>"%OUT%" <nul set /p =", "%CHAR_DIR%/%%F""
+        )
+      )
+      for /f "delims=" %%F in ('dir /b /a-d "%CHAR_DIR%\%%N_*.%%E" 2^>nul') do (
+        if "!firstItem!"=="1" (
+          set "firstItem=0"
+          >>"%OUT%" <nul set /p =""%CHAR_DIR%/%%F""
+        ) else (
+          >>"%OUT%" <nul set /p =", "%CHAR_DIR%/%%F""
         )
       )
     )
@@ -102,5 +118,6 @@ if exist "%KEYS%" (
 del /q "%LIST%" >nul 2>&1
 del /q "%KEYS%" >nul 2>&1
 
+echo(
 echo ✅ تم إنشاء manifest.json (images + characters) داخل G1 بنجاح
 pause
