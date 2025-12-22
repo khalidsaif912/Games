@@ -33,6 +33,8 @@
 "saleh": ["characters/saleh-confused.png", "characters/saleh-think.png", "characters/saleh-win.png"]
 ,
 "sats": ["characters/sats-confused.png", "characters/sats-think.png", "characters/sats-win.png"]
+,
+"card": ["card-back.png"]
 
   }
 }
