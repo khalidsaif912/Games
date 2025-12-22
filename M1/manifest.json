@@ -18,9 +18,9 @@
     ,{"id":"V","img1":"V1.jpg","img2":"V2.jpg"}
   ],
   "characters": {
-"abdo": ["characters/abdo-confused.png", "characters/abdo-think.png", "characters/abdo-win.png"]
+"alii": ["characters/alii-lose.png", "characters/alii-think.png", "characters/alii-win.png"]
 ,
-"ali": ["characters/ali-lose.png", "characters/ali-think.png", "characters/ali-win.png"]
+"fahim": ["characters/fahim-confused.png", "characters/fahim-think.png", "characters/fahim-win.png"]
 ,
 "hosni": ["characters/hosni-confused.png", "characters/hosni-think.png", "characters/hosni-win.png"]
 ,
