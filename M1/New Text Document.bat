@@ -1,13 +1,16 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 
+REM ================== SETTINGS ==================
 set "OUT=manifest.json"
+set "CHAR_DIR=characters"
 set "Q=""
 
+REM ================== START JSON ==================
 > "%OUT%" echo(
 >>"%OUT%" echo {
 
-REM ================== PAIRS ==================
+REM ================== PAIRS (from M1 root) ==================
 >>"%OUT%" echo   "pairs": [
 
 set "firstPair=1"
@@ -33,10 +36,12 @@ for %%L in (A B C D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
 >>"%OUT%" echo   ],
 >>"%OUT%" echo   "characters": {
 
-REM ================== CHARACTERS ==================
+REM ================== CHARACTERS (from M1\characters) ==================
 set "firstChar=1"
 
+REM ✅ أسماء الشخصيات (lowercase)
 for %%N in (khalid sats ali saleh omar wissam haitham) do (
+
   if "!firstChar!"=="1" (
     set "firstChar=0"
   ) else (
@@ -48,14 +53,15 @@ for %%N in (khalid sats ali saleh omar wissam haitham) do (
 
   set "firstItem=1"
 
+  REM اقرأ من مجلد الشخصيات
   for %%E in (png jpg jpeg webp) do (
-    for %%F in ("%%N-*.%%E") do (
+    for %%F in ("%CHAR_DIR%\%%N-*.%%E") do (
       if exist "%%~fF" (
         if "!firstItem!"=="1" (
           set "firstItem=0"
-          >>"%OUT%" <nul set /p ="!Q!%%~nxF!Q!"
+          >>"%OUT%" <nul set /p ="!Q!%CHAR_DIR%/%%~nxF!Q!"
         ) else (
-          >>"%OUT%" <nul set /p =", !Q!%%~nxF!Q!"
+          >>"%OUT%" <nul set /p =", !Q!%CHAR_DIR%/%%~nxF!Q!"
         )
       )
     )
@@ -69,5 +75,5 @@ for %%N in (khalid sats ali saleh omar wissam haitham) do (
 >>"%OUT%" echo }
 
 echo(
-echo ✅ manifest.json updated successfully (Valid JSON)
+echo ✅ manifest.json updated successfully (pairs from M1 root + characters from %CHAR_DIR%\)
 pause
