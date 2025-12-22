@@ -1,0 +1,20 @@
+{
+  "images": [
+    { "img": "1.jpg", "label": "1" }
+,
+    { "img": "2.jpg", "label": "2" }
+,
+    { "img": "3.jpg", "label": "3" }
+,
+    { "img": "4.jpg", "label": "4" }
+,
+    { "img": "5.jpg", "label": "5" }
+,
+    { "img": "6.jpg", "label": "6" }
+,
+    { "img": "7.jpg", "label": "7" }
+,
+    { "img": "8.jpg", "label": "8" }
+
+  ]
+}
