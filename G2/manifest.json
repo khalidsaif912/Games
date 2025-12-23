@@ -18,8 +18,27 @@
     ,{ "img": "6.jpg", "label": "6" }
     ,{ "img": "7.jpg", "label": "7" }
     ,{ "img": "8.jpg", "label": "8" }
-    ,{ "img": "9.jpg", "label": "9" }
+    ,{ "img": "A1.jpg", "label": "A1" }
+    ,{ "img": "B2.jpg", "label": "B2" }
+    ,{ "img": "C3.jpg", "label": "C3" }
+    ,{ "img": "D4.jpg", "label": "D4" }
+    ,{ "img": "E5.jpg", "label": "E5" }
+    ,{ "img": "G6.jpg", "label": "G6" }
+    ,{ "img": "H7.jpg", "label": "H7" }
+    ,{ "img": "H9.jpg", "label": "H9" }
+    ,{ "img": "I18.jpg", "label": "I18" }
+    ,{ "img": "K8.jpg", "label": "K8" }
+    ,{ "img": "L10.jpg", "label": "L10" }
+    ,{ "img": "M14.jpg", "label": "M14" }
+    ,{ "img": "N14.jpg", "label": "N14" }
+    ,{ "img": "P12.jpg", "label": "P12" }
+    ,{ "img": "Q10.jpg", "label": "Q10" }
+    ,{ "img": "R19.jpg", "label": "R19" }
+    ,{ "img": "S11.jpg", "label": "S11" }
+    ,{ "img": "T17.jpg", "label": "T17" }
+    ,{ "img": "V16.jpg", "label": "V16" }
     ,{ "img": "wallpaper.png", "label": "wallpaper" }
+    ,{ "img": "X15.jpg", "label": "X15" }
   ],
   "characters": {
   }
