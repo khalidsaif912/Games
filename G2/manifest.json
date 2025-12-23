@@ -19,6 +19,7 @@
     ,{ "img": "7.jpg", "label": "7" }
     ,{ "img": "8.jpg", "label": "8" }
     ,{ "img": "9.jpg", "label": "9" }
+    ,{ "img": "wallpaper.png", "label": "wallpaper" }
   ],
   "characters": {
   }

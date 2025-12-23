@@ -18,7 +18,7 @@
     ,{ "img": "7.jpg", "label": "7" }
     ,{ "img": "8.jpg", "label": "8" }
     ,{ "img": "9.jpg", "label": "9" }
-    ,{ "img": "w.png", "label": "w" }
+    ,{ "img": "wallpaper.png", "label": "wallpaper" }
   ],
   "characters": {
 "alii": ["characters/alii-lose.png", "characters/alii-think.png", "characters/alii-win.png"]
