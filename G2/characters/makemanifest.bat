@@ -5,24 +5,24 @@ cd /d "%~dp0"
 
 set "OUT=manifest.json"
 set "CHAR_DIR=characters"
-set "LIST=%TEMP%\G2_img_list_%RANDOM%.txt"
-set "KEYS=%TEMP%\G2_char_keys_%RANDOM%.txt"
+set "LIST=%TEMP%\G1_num_list_%RANDOM%.txt"
+set "KEYS=%TEMP%\G1_char_keys_%RANDOM%.txt"
 
 if exist "%LIST%" del /q "%LIST%" >nul 2>&1
 if exist "%KEYS%" del /q "%KEYS%" >nul 2>&1
 
-REM ===== 1) صور اللعبة من جذر G2 (أي اسم: أرقام/حروف/مختلط) =====
+REM =========================
+REM 1) IMAGES (numeric only)
+REM =========================
 for %%E in (png jpg jpeg webp) do (
-  for /f "delims=" %%F in ('dir /b /a-d "*.%%E" 2^>nul') do (
-    REM استبعد ملفات الخلفية وظهر الكرت من قائمة الكروت
-    if /I not "%%F"=="wallpaper.png" if /I not "%%F"=="card-back.png" (
-      echo %%F>>"%LIST%"
-    )
+  for %%F in (*."%%E") do (
+    echo %%~nF| findstr /R "^[0-9][0-9]*$" >nul
+    if not errorlevel 1 echo %%~nF.%%E>>"%LIST%"
   )
 )
 
 if not exist "%LIST%" (
-  echo ⚠️ لم يتم العثور على صور كروت داخل %CD%
+  echo ⚠️ لم يتم العثور على صور رقمية مثل 1.jpg داخل %CD%
   pause
   exit /b 0
 )
@@ -46,7 +46,9 @@ for /f "usebackq delims=" %%S in ("%LIST%") do (
 >>"%OUT%" echo   ],
 >>"%OUT%" echo   "characters": {
 
-REM ===== 2) الشخصيات من G2\characters =====
+REM =========================
+REM 2) CHARACTERS (from characters\)
+REM =========================
 if not exist "%CHAR_DIR%\" (
   >>"%OUT%" echo   }
   >>"%OUT%" echo }
@@ -57,13 +59,14 @@ if not exist "%CHAR_DIR%\" (
   exit /b 0
 )
 
+REM Discover character keys from files like name-state.png
 for %%E in (png jpg jpeg webp) do (
-  for /f "delims=" %%F in ('dir /b /a-d "%CHAR_DIR%\*.%%E" 2^>nul') do (
-    set "FN=%%~nF"
-    set "KEY=!FN!"
-    for /f "tokens=1 delims=-" %%K in ("!KEY!") do set "KEY=%%K"
-    for /f "tokens=1 delims=_" %%K in ("!KEY!") do set "KEY=%%K"
-    findstr /I /X /C:"!KEY!" "%KEYS%" >nul 2>&1 || echo !KEY!>>"%KEYS%"
+  for %%F in ("%CHAR_DIR%\*-*.%%E") do (
+    if exist "%%~fF" (
+      for /f "delims=-" %%K in ("%%~nF") do (
+        findstr /I /X /C:"%%K" "%KEYS%" >nul 2>&1 || echo %%K>>"%KEYS%"
+      )
+    )
   )
 )
 
@@ -76,11 +79,15 @@ if exist "%KEYS%" (
     set "firstItem=1"
 
     for %%E in (png jpg jpeg webp) do (
-      for /f "delims=" %%F in ('dir /b /a-d "%CHAR_DIR%\%%N-*.%%E" 2^>nul') do (
-        if "!firstItem!"=="1" (set "firstItem=0" & >>"%OUT%" <nul set /p =""%CHAR_DIR%/%%F"") else (>>"%OUT%" <nul set /p =", "%CHAR_DIR%/%%F"")
-      )
-      for /f "delims=" %%F in ('dir /b /a-d "%CHAR_DIR%\%%N_*.%%E" 2^>nul') do (
-        if "!firstItem!"=="1" (set "firstItem=0" & >>"%OUT%" <nul set /p =""%CHAR_DIR%/%%F"") else (>>"%OUT%" <nul set /p =", "%CHAR_DIR%/%%F"")
+      for %%F in ("%CHAR_DIR%\%%N-*.%%E") do (
+        if exist "%%~fF" (
+          if "!firstItem!"=="1" (
+            set "firstItem=0"
+            >>"%OUT%" <nul set /p =""%CHAR_DIR%/%%~nxF""
+          ) else (
+            >>"%OUT%" <nul set /p =", "%CHAR_DIR%/%%~nxF""
+          )
+        )
       )
     )
 
@@ -95,5 +102,5 @@ if exist "%KEYS%" (
 del /q "%LIST%" >nul 2>&1
 del /q "%KEYS%" >nul 2>&1
 
-echo ✅ تم إنشاء manifest.json (images + characters) داخل G2 بنجاح
+echo ✅ تم إنشاء manifest.json (images + characters) داخل G1 بنجاح
 pause
